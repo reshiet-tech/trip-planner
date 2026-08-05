@@ -867,6 +867,8 @@ body {
     padding: 24px;
     border-radius: var(--border-radius-lg);
     text-align: center;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-content h3 {
