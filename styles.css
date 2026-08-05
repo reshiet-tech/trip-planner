@@ -146,7 +146,8 @@ body {
    App Header — Premium Redesign
    ============================================ */
 .app-header {
-    position: relative;
+    position: sticky;
+    top: 0; /* Will be dynamically updated by JS */
     z-index: 2000;
     padding-top: env(safe-area-inset-top, 20px);
     border-bottom-left-radius: 28px;
@@ -309,9 +310,6 @@ body {
 }
 
 .header-nav-block {
-    position: sticky;
-    top: env(safe-area-inset-top, 10px);
-    z-index: 1000;
     background: rgba(242, 244, 248, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -322,17 +320,7 @@ body {
     border: 1px solid rgba(0, 122, 255, 0.08);
 }
 
-/* Mask to hide scrolling cards in the gap above the sticky nav */
-.header-nav-block::before {
-    content: '';
-    position: absolute;
-    top: -100px; /* Extend well above the element */
-    bottom: 100%; /* Stop at the top edge of the element */
-    left: -20px;
-    right: -20px;
-    background: var(--bg-color); /* Matches page background */
-    z-index: -1;
-}
+
 
 /* Row 3: Segmented Control Tabs */
 .tabs-wrapper {

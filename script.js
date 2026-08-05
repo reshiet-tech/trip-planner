@@ -95,7 +95,18 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-
+    // --- Dynamic Sticky Header Logic ---
+    function updateStickyHeader() {
+        const header = document.querySelector('.app-header');
+        const iconBar = document.querySelector('.header-icon-bar');
+        const identity = document.querySelector('.header-identity');
+        if (header && iconBar && identity) {
+            const hideHeight = iconBar.offsetHeight + identity.offsetHeight;
+            header.style.top = `-${hideHeight}px`;
+        }
+    }
+    window.addEventListener('resize', updateStickyHeader);
+    setTimeout(updateStickyHeader, 100);
 
     // Initialize 24-hour time selects
     const hourSelect = document.getElementById('schedule-time-hour');
