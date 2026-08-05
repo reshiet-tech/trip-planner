@@ -146,9 +146,8 @@ body {
    App Header — Premium Redesign
    ============================================ */
 .app-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
+    position: relative;
+    z-index: 10;
     padding-top: env(safe-area-inset-top, 20px);
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
@@ -311,6 +310,9 @@ body {
 
 /* Nav Block Grouping */
 .header-nav-block {
+    position: sticky;
+    top: env(safe-area-inset-top, 10px);
+    z-index: 1000;
     background: rgba(242, 244, 248, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -395,7 +397,7 @@ body {
 
 /* Content Area */
 .content-area {
-    padding-top: calc(env(safe-area-inset-top, 20px) + 290px);
+    padding-top: 10px;
     padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 20px);
     min-height: 100vh;
 }

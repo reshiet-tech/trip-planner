@@ -591,6 +591,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    elements.adminPinInput.addEventListener('input', () => {
+        if (elements.adminPinInput.value === ADMIN_PIN_CODE) {
+            elements.btnAdminLogin.click();
+        }
+    });
+
     // --- Expenses & Data Logic ---
     function initExpenses() {
         if (db) {
