@@ -28,16 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
         itinerary: null
     };
 
-    const PIN_CODE = '1111';
     const ADMIN_PIN_CODE = '1111';
 
     // DOM Elements
     const elements = {
         app: document.getElementById('app'),
-        pinScreen: document.getElementById('pin-screen'),
-        accessPinInput: document.getElementById('access-pin'),
-        btnAccess: document.getElementById('btn-access'),
-        pinError: document.getElementById('pin-error'),
         
         tabBtns: document.querySelectorAll('.tab-btn'),
         viewSections: document.querySelectorAll('.view-section'),
@@ -100,15 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-    // --- Access Control ---
-    function checkAccess() {
-        const hasAccess = sessionStorage.getItem('trip_access_granted') === 'true';
-        if (hasAccess) {
-            elements.pinScreen.classList.add('hidden');
-            elements.app.classList.remove('hidden');
-            renderTimeline();
-        }
-    }
+
 
     // Initialize 24-hour time selects
     const hourSelect = document.getElementById('schedule-time-hour');
@@ -130,18 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    elements.btnAccess.addEventListener('click', () => {
-        if (elements.accessPinInput.value === PIN_CODE) {
-            sessionStorage.setItem('trip_access_granted', 'true');
-            elements.pinScreen.classList.add('hidden');
-            elements.app.classList.remove('hidden');
-            renderTimeline();
-        } else {
-            elements.pinError.classList.remove('hidden');
-            elements.accessPinInput.value = '';
-            elements.accessPinInput.focus();
-        }
-    });
+
 
     // --- Navigation ---
     elements.tabBtns.forEach(btn => {
@@ -1044,6 +1020,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initial Check
-    checkAccess();
+    renderTimeline();
     initExpenses();
 });
