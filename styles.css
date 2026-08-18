@@ -751,7 +751,7 @@ body {
 }
 
 .marker-label {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--surface-color);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 11px;
