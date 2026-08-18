@@ -17,10 +17,12 @@ try {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    let hasSetInitialDay = false;
+
     // State
     const state = {
         currentView: 'timeline', // timeline, expenses
-        currentDay: '1',
+        currentDay: null,
         isAdmin: false,
         expenses: [],
         editingExpenseId: null,
@@ -222,8 +224,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDate = new Date('2026-08-14T00:00:00+09:00');
         const msPerDay = 1000 * 60 * 60 * 24;
         
-        if (!days.includes(state.currentDay) && days.length > 0) {
-            state.currentDay = days[0];
+        if (!hasSetInitialDay && days.length > 0) {
+            hasSetInitialDay = true;
+            const now = new Date();
+            const todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            
+            let autoDay = days[0];
+            days.forEach(day => {
+                const dayDate = new Date(startDate.getTime() + (parseInt(day) - 1) * msPerDay);
+                const dayStr = `${dayDate.getFullYear()}-${String(dayDate.getMonth()+1).padStart(2, '0')}-${String(dayDate.getDate()).padStart(2, '0')}`;
+                if (dayStr === todayStr) {
+                    autoDay = day;
+                }
+            });
+            state.currentDay = autoDay;
+        } else if (!state.currentDay || !days.includes(state.currentDay)) {
+            if (days.length > 0) state.currentDay = days[0];
         }
 
         days.forEach(day => {
@@ -404,9 +420,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Auto-scroll to current item (delay slightly for DOM render)
         setTimeout(() => {
-            const currentEl = document.querySelector('.timeline-card.current');
-            if (currentEl) {
-                currentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            let targetEl = document.querySelector('.timeline-card.current');
+            if (!targetEl) {
+                targetEl = document.querySelector('.timeline-card.future');
+            }
+            if (targetEl) {
+                const headerOffset = 150; // offset for sticky header
+                const elementPosition = targetEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
             }
         }, 100);
     }
